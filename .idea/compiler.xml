@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Gateway-Service" />
+        <module name="Talent-Post" />
+        <module name="Authentication-Service" />
+        <module name="Applications" />
+        <module name="Artists" />
+        <module name="Directors" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Applications" options="-parameters" />
+      <module name="Artists" options="-parameters" />
+      <module name="Authentication-Service" options="-parameters" />
+      <module name="Directors" options="-parameters" />
+      <module name="Gateway-Service" options="-parameters" />
+      <module name="Talent-Post" options="-parameters" />
+    </option>
+  </component>
+</project>

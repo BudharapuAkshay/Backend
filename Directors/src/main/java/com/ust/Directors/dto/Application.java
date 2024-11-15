@@ -8,5 +8,4 @@ public class Application {
     private String postId;
     private String artistId;
     private boolean isShortlisted;
-    private String fileUrl;
 }

@@ -19,6 +19,7 @@ public class TalentPost {
     private Date talentPostEndDate;
     private String talentPostCompanyInfo;
     private List<String> talentPostPreScreenRequests;
-
+    private String talentPostGender;
+    private Date talentPostSubmissionDeadline;
 }
 

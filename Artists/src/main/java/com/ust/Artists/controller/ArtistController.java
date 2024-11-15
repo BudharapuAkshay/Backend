@@ -1,6 +1,9 @@
 package com.ust.Artists.controller;
 
+import com.ust.Artists.client.ApplicationClient;
 import com.ust.Artists.client.TalentPostClient;
+import com.ust.Artists.dto.Application;
+import com.ust.Artists.dto.ApplicationWithPostResponse;
 import com.ust.Artists.dto.TalentPost;
 import com.ust.Artists.model.Artist;
 import com.ust.Artists.service.ArtistService;
@@ -18,9 +21,12 @@ public class ArtistController {
 
     @Autowired
     private ArtistService service;
+    @Autowired
     private TalentPostClient talentPostClient;
+    @Autowired
+    private ApplicationClient applicationClient;
 
-    @PostMapping
+    @PostMapping("/{artistId}")
     public ResponseEntity<Artist> createArtist(@PathVariable String artistId, @RequestBody Artist artist) {
         return ResponseEntity.ok(service.createArtistProfile(artistId, artist));
     }
@@ -52,5 +58,17 @@ public class ArtistController {
     @GetMapping("/posts")
     public ResponseEntity<List<TalentPost>> getAllPosts() {
         return talentPostClient.getAllPosts();
+    }
+
+    // Apply to a Talent Post
+    @PostMapping("/posts/{artistId}/{postId}/apply")
+    public ResponseEntity<ApplicationWithPostResponse> applyToPost(@PathVariable String postId,@PathVariable String artistId, @RequestBody Application application) {
+        ApplicationWithPostResponse createdApplication = applicationClient.applyToPost(postId,artistId, application);
+        return ResponseEntity.ok(createdApplication);
+    }
+
+    @GetMapping("/{artistId}/applications")
+    public ResponseEntity<List<ApplicationWithPostResponse>> getApplicationsByArtistId(@PathVariable String artistId) {
+        return applicationClient.getApplicationsByArtistId(artistId);
     }
 }

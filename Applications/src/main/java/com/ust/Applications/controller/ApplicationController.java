@@ -1,5 +1,7 @@
 package com.ust.Applications.controller;
 
+import com.ust.Applications.dto.ApplicationResponse;
+import com.ust.Applications.dto.ApplicationWithPostResponse;
 import com.ust.Applications.model.Application;
 import com.ust.Applications.service.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,28 +18,29 @@ public class ApplicationController {
     private ApplicationService applicationService;
 
     // Apply to a specific talent post (Artist only)
-    @PostMapping("/{postId}/apply")
-    public Application applyToPost(@PathVariable String postId, @RequestBody Application application) {
+    @PostMapping("/{artistId}/{postId}/apply")
+    public Application applyToPost(@PathVariable String postId, @PathVariable String artistId, @RequestBody Application application) {
         application.setPostId(postId);
+        application.setArtistId(artistId);
         return applicationService.createApplication(application);
     }
 
     // View all applications for a specific post (Director only)
     @GetMapping("/{postId}/applicants")
-    public List<Application> getApplicationsByPostId(@PathVariable String postId) {
+    public List<ApplicationResponse> getApplicationsByPostId(@PathVariable String postId) {
         return applicationService.getApplicationsByPostId(postId);
     }
 
     // View shortlisted applicants for a specific post (Director only)
     @GetMapping("/{postId}/shortlisted")
-    public List<Application> getShortlistedApplications(@PathVariable String postId) {
+    public List<ApplicationResponse> getShortlistedApplications(@PathVariable String postId) {
         return applicationService.getShortlistedApplicationsByPostId(postId);
     }
 
     // Mark an application as shortlisted (Director only)
     @PutMapping("/{applicationId}/shortlist")
-    public Application shortlistApplication(@PathVariable String applicationId) {
-        return applicationService.updateShortlistStatus(applicationId);
+    public void shortlistApplication(@PathVariable String applicationId) {
+        applicationService.updateShortlistStatus(applicationId);
     }
 
     @PostMapping("/{postId}/notify-shortlisted")
@@ -54,7 +57,7 @@ public class ApplicationController {
 
     // Endpoint to fetch applications by artist ID
     @GetMapping("/artist/{artistId}")
-    public ResponseEntity<List<Application>> getApplicationsByArtistId(@PathVariable String artistId) {
+    public ResponseEntity<List<ApplicationWithPostResponse>> getApplicationsByArtistId(@PathVariable String artistId) {
         return ResponseEntity.ok(applicationService.getApplicationsByArtistId(artistId));
     }
 }

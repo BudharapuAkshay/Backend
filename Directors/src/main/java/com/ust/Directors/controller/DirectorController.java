@@ -3,6 +3,7 @@ package com.ust.Directors.controller;
 import com.ust.Directors.client.ApplicationClient;
 import com.ust.Directors.client.TalentPostClient;
 import com.ust.Directors.dto.Application;
+import com.ust.Directors.dto.ApplicationResponse;
 import com.ust.Directors.dto.TalentPost;
 import com.ust.Directors.model.Director;
 import com.ust.Directors.service.DirectorService;
@@ -54,18 +55,18 @@ public class DirectorController {
 
     // Application service endpoints
     @GetMapping("/applications/{postId}/applicants")
-    public List<Application> getApplicationsByPostId(@PathVariable String postId) {
+    public List<ApplicationResponse> getApplicationsByPostId(@PathVariable String postId) {
         return applicationClient.getApplicationsByPostId(postId);
     }
 
     @GetMapping("/applications/{postId}/shortlisted")
-    public List<Application> getShortlistedApplicationsByPostId(@PathVariable String postId) {
+    public List<ApplicationResponse> getShortlistedApplicationsByPostId(@PathVariable String postId) {
         return applicationClient.getShortlistedApplicationsByPostId(postId);
     }
 
     @PutMapping("/applications/{applicationId}/shortlist")
-    public Application shortlistApplication(@PathVariable String applicationId) {
-        return applicationClient.shortlistApplication(applicationId);
+    public void shortlistApplication(@PathVariable String applicationId) {
+         applicationClient.shortlistApplication(applicationId);
     }
 
     @PostMapping("/applications/{postId}/notify-shortlisted")

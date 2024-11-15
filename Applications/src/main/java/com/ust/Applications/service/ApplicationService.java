@@ -2,6 +2,8 @@ package com.ust.Applications.service;
 
 import com.ust.Applications.client.ArtistClient;
 import com.ust.Applications.client.TalentPostClient;
+import com.ust.Applications.dto.ApplicationResponse;
+import com.ust.Applications.dto.ApplicationWithPostResponse;
 import com.ust.Applications.dto.Artist;
 import com.ust.Applications.dto.TalentPost;
 import com.ust.Applications.model.Application;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ApplicationService {
@@ -38,24 +41,68 @@ public class ApplicationService {
     }
 
     // Get all applicants for a specific post
-    public List<Application> getApplicationsByPostId(String postId) {
-        return applicationRepository.findByPostId(postId);
+    public List<ApplicationResponse> getApplicationsByPostId(String postId) {
+        // Fetch all applications by postId
+        List<Application> applications = applicationRepository.findByPostId(postId);
+
+        // Map the applications to the custom DTO
+        return applications.stream()
+                .map(application -> {
+                    Artist artist = artistClient.getArtistById(application.getArtistId());  // Use the Feign client to fetch artist details
+                    return new ApplicationResponse(
+                            application.getApplicationId(),
+                            artist.getArtistProfilePicture(),
+                            artist.getArtistName(),
+                            artist.getArtistType(),
+
+                            artist.getArtistExperience(),
+
+                            application.isShortlisted(),
+
+                            artist.getArtistEmail(),
+                            artist.getArtistPrimaryWorkLocation()  // Assuming artistRole is about the artist
+
+                    );
+                })
+                .collect(Collectors.toList());
     }
 
     // Get shortlisted applicants for a specific post
-    public List<Application> getShortlistedApplicationsByPostId(String postId) {
-        return applicationRepository.findByPostIdAndIsShortlistedTrue(postId);
+    public List<ApplicationResponse> getShortlistedApplicationsByPostId(String postId) {
+        List<Application> applications = applicationRepository.findByPostIdAndIsShortlistedTrue(postId);
+
+        // Map the applications to the custom DTO
+        return applications.stream()
+                .map(application -> {
+                    Artist artist = artistClient.getArtistById(application.getArtistId());  // Use the Feign client to fetch artist details
+                    return new ApplicationResponse(
+                            application.getApplicationId(),
+                            artist.getArtistProfilePicture(),
+                            artist.getArtistName(),
+                            artist.getArtistType(),
+
+                            artist.getArtistExperience(),
+
+                            application.isShortlisted(),
+
+                            artist.getArtistEmail(),
+                            artist.getArtistPrimaryWorkLocation()  // Assuming artistRole is about the artist
+
+                    );
+                })
+                .collect(Collectors.toList());
     }
 
     // Update an application to be shortlisted
-    public Application updateShortlistStatus(String applicationId) {
+    public void updateShortlistStatus(String applicationId) {
         Optional<Application> applicationOpt = applicationRepository.findById(applicationId);
         if (applicationOpt.isPresent()) {
             Application application = applicationOpt.get();
             application.setShortlisted(!application.isShortlisted());
-            return applicationRepository.save(application);
+            applicationRepository.save(application);
+            return;
         }
-        return null;
+        return;
     }
 
     // Delete an application
@@ -99,8 +146,32 @@ public class ApplicationService {
         mailSender.send(mailMessage);
     }
 
-    public List<Application> getApplicationsByArtistId(String artistId) {
-        return applicationRepository.findByArtistId(artistId);
+    public List<ApplicationWithPostResponse> getApplicationsByArtistId(String artistId) {
+        List<Application> applications = applicationRepository.findByArtistId(artistId);
+
+        return applications.stream().map(application -> {
+            TalentPost talentPost = talentPostClient.getPostById(application.getPostId());  // Fetch TalentPost by postId
+
+            return new ApplicationWithPostResponse(
+                    application.getApplicationId(),
+                    application.getArtistId(),
+                    application.isShortlisted(),
+                    talentPost.getTalentPostId(),
+                    talentPost.getDirectorId(),
+                    talentPost.getTalentPostTalentType(),
+                    talentPost.getTalentPostRoleType(),
+                    talentPost.getTalentPostProjectDetails(),
+                    talentPost.getTalentPostPaymentInfo(),
+                    talentPost.getTalentPostHours(),
+                    talentPost.getTalentPostLocation(),
+                    talentPost.getTalentPostStartDate(),
+                    talentPost.getTalentPostEndDate(),
+                    talentPost.getTalentPostCompanyInfo(),
+                    talentPost.getTalentPostPreScreenRequests(),
+                    talentPost.getTalentPostGender(),
+                    talentPost.getTalentPostSubmissionDeadline()
+            );
+        }).collect(Collectors.toList());
     }
 }
 

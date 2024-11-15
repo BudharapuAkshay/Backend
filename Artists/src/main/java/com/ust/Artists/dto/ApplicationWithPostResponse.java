@@ -1,12 +1,20 @@
-package com.ust.Directors.dto;
+package com.ust.Artists.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
 
 @Data
-public class TalentPost {
+@AllArgsConstructor
+@NoArgsConstructor
+public class ApplicationWithPostResponse {
+    private String applicationId;
+    private String artistId;
+    private boolean isShortlisted;
+
     private String talentPostId;
     private String directorId;
     private String talentPostTalentType;
@@ -19,7 +27,6 @@ public class TalentPost {
     private Date talentPostEndDate;
     private String talentPostCompanyInfo;
     private List<String> talentPostPreScreenRequests;
-    private String talentPostImageUrl;
     private String talentPostGender;
     private Date talentPostSubmissionDeadline;
 }

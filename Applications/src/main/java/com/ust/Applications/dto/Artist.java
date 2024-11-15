@@ -19,7 +19,7 @@ public class Artist {
     private String artistWeight;
     private String artistAge;
     private List<String> artistSpecialSkills;
-    private List<String> artistExperience;
+    private String artistExperience;
     private String artistType;
     private String artistEmail;
     private String artistPhoneNumber;

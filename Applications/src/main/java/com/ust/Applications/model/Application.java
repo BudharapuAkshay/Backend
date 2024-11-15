@@ -18,7 +18,7 @@ public class Application {
     private String postId;      // References the TalentPost's postId
     private String artistId;    // References the Artist's artistId
     private boolean isShortlisted = false;     // Status of the application
-    private String fileUrl;
+
 }
 
 
