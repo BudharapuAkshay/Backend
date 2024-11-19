@@ -14,8 +14,8 @@ import java.util.List;
 @FeignClient(name = "application-service", url = "http://localhost:8989")
 public interface ApplicationClient {
 
-    @PostMapping("/{artistId}/{postId}/apply")
-    ApplicationWithPostResponse applyToPost(@PathVariable("postId") String postId, @PathVariable String artistId, @RequestBody Application application);
+    @PostMapping("/api/applications/{artistId}/{postId}/apply")
+    ApplicationWithPostResponse applyToPost(@PathVariable String artistId, @PathVariable String postId, @RequestBody Application application);
 
     @GetMapping("/api/applications/artist/{artistId}")
     ResponseEntity<List<ApplicationWithPostResponse>> getApplicationsByArtistId(@PathVariable String artistId);

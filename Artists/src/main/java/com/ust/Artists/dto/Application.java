@@ -9,4 +9,5 @@ public class Application {
     private String postId;
     private String artistId;    // References the Artist's artistId
     private boolean isShortlisted = false;
+    private String fileUrl;
 }

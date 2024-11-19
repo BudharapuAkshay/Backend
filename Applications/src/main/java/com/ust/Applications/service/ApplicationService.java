@@ -51,6 +51,7 @@ public class ApplicationService {
                     Artist artist = artistClient.getArtistById(application.getArtistId());  // Use the Feign client to fetch artist details
                     return new ApplicationResponse(
                             application.getApplicationId(),
+                            artist.getArtistId(),
                             artist.getArtistProfilePicture(),
                             artist.getArtistName(),
                             artist.getArtistType(),
@@ -58,6 +59,7 @@ public class ApplicationService {
                             artist.getArtistExperience(),
 
                             application.isShortlisted(),
+                            application.getFileUrl(),
 
                             artist.getArtistEmail(),
                             artist.getArtistPrimaryWorkLocation()  // Assuming artistRole is about the artist
@@ -77,6 +79,7 @@ public class ApplicationService {
                     Artist artist = artistClient.getArtistById(application.getArtistId());  // Use the Feign client to fetch artist details
                     return new ApplicationResponse(
                             application.getApplicationId(),
+                            artist.getArtistId(),
                             artist.getArtistProfilePicture(),
                             artist.getArtistName(),
                             artist.getArtistType(),
@@ -84,6 +87,7 @@ public class ApplicationService {
                             artist.getArtistExperience(),
 
                             application.isShortlisted(),
+                            application.getFileUrl(),
 
                             artist.getArtistEmail(),
                             artist.getArtistPrimaryWorkLocation()  // Assuming artistRole is about the artist
@@ -156,6 +160,7 @@ public class ApplicationService {
                     application.getApplicationId(),
                     application.getArtistId(),
                     application.isShortlisted(),
+                    application.getFileUrl(),
                     talentPost.getTalentPostId(),
                     talentPost.getDirectorId(),
                     talentPost.getTalentPostTalentType(),
@@ -169,7 +174,8 @@ public class ApplicationService {
                     talentPost.getTalentPostCompanyInfo(),
                     talentPost.getTalentPostPreScreenRequests(),
                     talentPost.getTalentPostGender(),
-                    talentPost.getTalentPostSubmissionDeadline()
+                    talentPost.getTalentPostSubmissionDeadline(),
+                    talentPost.getTalentPostImageUrl()
             );
         }).collect(Collectors.toList());
     }

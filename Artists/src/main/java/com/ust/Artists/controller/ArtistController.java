@@ -62,8 +62,9 @@ public class ArtistController {
 
     // Apply to a Talent Post
     @PostMapping("/posts/{artistId}/{postId}/apply")
-    public ResponseEntity<ApplicationWithPostResponse> applyToPost(@PathVariable String postId,@PathVariable String artistId, @RequestBody Application application) {
-        ApplicationWithPostResponse createdApplication = applicationClient.applyToPost(postId,artistId, application);
+    public ResponseEntity<ApplicationWithPostResponse> applyToPost(@PathVariable String artistId,@PathVariable String postId, @RequestBody Application application) {
+
+        ApplicationWithPostResponse createdApplication = applicationClient.applyToPost(artistId,postId, application);
         return ResponseEntity.ok(createdApplication);
     }
 

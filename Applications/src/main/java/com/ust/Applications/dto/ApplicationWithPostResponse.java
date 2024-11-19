@@ -14,7 +14,7 @@ public class ApplicationWithPostResponse{
     private String applicationId;
     private String artistId;
     private boolean isShortlisted;
-
+    private String fileUrl;
     private String talentPostId;
     private String directorId;
     private String talentPostTalentType;
@@ -29,4 +29,5 @@ public class ApplicationWithPostResponse{
     private List<String> talentPostPreScreenRequests;
     private String talentPostGender;
     private Date talentPostSubmissionDeadline;
+    private String talentPostImageUrl;
 }

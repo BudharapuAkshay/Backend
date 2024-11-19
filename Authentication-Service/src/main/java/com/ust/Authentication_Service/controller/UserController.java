@@ -31,18 +31,18 @@ public class UserController {
 
     // Endpoint for registering a new Director
     @PostMapping("/register/director")
-    public ResponseEntity<String> registerDirector(@RequestBody User user) {
+    public ResponseEntity<User> registerDirector(@RequestBody User user) {
         user.setRole("DIRECTOR");
         User savedUser = userService.saveUser(user);
-        return ResponseEntity.ok("Director registered with ID: " + savedUser.getId());
+        return ResponseEntity.ok(savedUser);
     }
 
     // Endpoint for registering a new Artist
     @PostMapping("/register/artist")
-    public ResponseEntity<String> registerArtist(@RequestBody User user) {
+    public ResponseEntity<User> registerArtist(@RequestBody User user) {
         user.setRole("ARTIST");
         User savedUser = userService.saveUser(user);
-        return ResponseEntity.ok("Artist registered with ID: " + savedUser.getId());
+        return ResponseEntity.ok(savedUser);
     }
 
     // Endpoint for user login, returning a JWT if successful

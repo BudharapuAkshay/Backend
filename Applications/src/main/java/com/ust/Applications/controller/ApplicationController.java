@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/applications")
+@CrossOrigin
 public class ApplicationController {
 
     @Autowired
@@ -19,7 +20,7 @@ public class ApplicationController {
 
     // Apply to a specific talent post (Artist only)
     @PostMapping("/{artistId}/{postId}/apply")
-    public Application applyToPost(@PathVariable String postId, @PathVariable String artistId, @RequestBody Application application) {
+    public Application applyToPost(@PathVariable String artistId, @PathVariable String postId, @RequestBody Application application) {
         application.setPostId(postId);
         application.setArtistId(artistId);
         return applicationService.createApplication(application);
