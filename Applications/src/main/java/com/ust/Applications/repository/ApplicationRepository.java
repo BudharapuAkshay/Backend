@@ -12,6 +12,7 @@ public interface ApplicationRepository extends MongoRepository<Application, Stri
     List<Application> findByPostId(String postId);
     List<Application> findByPostIdAndIsShortlistedTrue(String postId);
     List<Application> findByArtistId(String artistId);
+    boolean existsByArtistIdAndPostId(String artistId, String postId);
 }
 
 

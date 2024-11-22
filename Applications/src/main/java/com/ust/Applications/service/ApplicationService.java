@@ -179,6 +179,10 @@ public class ApplicationService {
             );
         }).collect(Collectors.toList());
     }
+
+    public boolean hasArtistApplied(String artistId, String postId) {
+        return applicationRepository.existsByArtistIdAndPostId(artistId, postId);
+    }
 }
 
 

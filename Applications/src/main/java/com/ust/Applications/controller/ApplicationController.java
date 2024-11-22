@@ -61,6 +61,13 @@ public class ApplicationController {
     public ResponseEntity<List<ApplicationWithPostResponse>> getApplicationsByArtistId(@PathVariable String artistId) {
         return ResponseEntity.ok(applicationService.getApplicationsByArtistId(artistId));
     }
+
+    // Status endpoint: Check if the artist has already applied for the post
+    @GetMapping("/{artistId}/{postId}/status")
+    public ResponseEntity<Boolean> hasApplied(@PathVariable String artistId, @PathVariable String postId) {
+        boolean alreadyApplied = applicationService.hasArtistApplied(artistId, postId);
+        return ResponseEntity.ok(alreadyApplied);
+    }
 }
 
 
